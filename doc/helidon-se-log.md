@@ -96,15 +96,34 @@ Helidonが実装しているEclipse MicroProfileのMetrics仕様
 ### アプリケーションのカスタマイズ
 Entityにweightプロパティを入れてみた
 H2の初期化スクリプトが失敗しているっぽい。ターミナルでH2のDBを見る方法、初期化時のSQLデバッグ出力の方法を調べてみる
+→Copilotのaut bug fixでDB初期データのjsonかjsonファイルを読み込むコードのどちらかが変わっていたのが原因。修正済
+ついでにDBのSQL出力の方法を調べてlogging.propertiesに追加
+
+### プログラム実行するDocker環境の作成
+VSCodeのdev container上でビルドするのはややこしそうなのでローカルPC上でビルドする
+本運用時はGithub Actionsでビルド→Dockerリポジトリにpushする仕組みを作るところ
+
+ローカルのgitでソースをpull
+Dockerファイルがあるパス（database-se)でビルドコマンド実行
+```
+docker build -t database-se .
+```
+ビルド成功したのでイメージの状態確認
+```
+> docker images database-se
+REPOSITORY    TAG       IMAGE ID       CREATED          SIZE
+database-se   latest    7e666b397a0e   20 seconds ago   417MB
+```
+コンテナ起動8080ポートをローカルの9000にフォワーディング
+```
+docker run -d -p 9000:8080 database-se
+```
+ブラウザで以下URLアクセスして実行できているのを確認
+http://localhost:9000/pokemon
+
 
 ## 次にやること
-
-### VS CodeのDev Container内でdocker起動
-docker-from-docker、docker-in-docker
-https://qiita.com/frozenbonito/items/b1de3980ee0553fb1c2f
-
-### H2のみのDockerイメージ
-ランタイム実行だけ確認したいのでH2でサンプルデータは入ったコンテナを簡単に作る方法を調べる
+docker-composeでDB、Web、キャッシュサーバー分けて実行する構成
 
 ### Java 軽量フレームワークの比較
 
