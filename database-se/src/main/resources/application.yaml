@@ -28,7 +28,7 @@ db:
     ping: "SET @HELIDON_PING=0"
     # Create database schema
     create-types: "CREATE TABLE POKEMONTYPE (id INTEGER NOT NULL PRIMARY KEY, name VARCHAR(64) NOT NULL)"
-    create-pokemons: "CREATE TABLE POKEMON (id INTEGER NOT NULL PRIMARY KEY, name VARCHAR(64) NOT NULL, id_type INTEGER NOT NULL REFERENCES POKEMONTYPE(id))"
+    create-pokemons: "CREATE TABLE POKEMON (id INTEGER NOT NULL PRIMARY KEY, name VARCHAR(64) NOT NULL, id_type INTEGER NOT NULL REFERENCES POKEMONTYPE(id), weight DOUBLE DEFAULT 0)"
     # Select all types
     select-all-types: "SELECT * FROM POKEMONTYPE"
     # Select all pokemons
@@ -39,7 +39,7 @@ db:
     select-pokemon-by-name: "SELECT * FROM POKEMON WHERE name = ?"
     # Insert records into database
     insert-type: "INSERT INTO POKEMONTYPE VALUES(?, ?)"
-    insert-pokemon: "INSERT INTO POKEMON VALUES(?, ?, ?)"
+    insert-pokemon: "INSERT INTO POKEMON VALUES(?, ?, ?, ?)"
     # Delete pokemon by id
     delete-pokemon-by-id: "DELETE FROM POKEMON WHERE id = :id"
 

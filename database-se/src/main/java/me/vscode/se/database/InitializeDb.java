@@ -112,7 +112,7 @@ public class InitializeDb {
             for (JsonValue pokemonValue : pokemons) {
                 JsonObject pokemon = pokemonValue.asJsonObject();
                 stage = stage.flatMapSingle(result -> exec.namedInsert("insert-pokemon",
-                        pokemon.getInt("id"), pokemon.getString("name"), pokemon.getInt("idType"), pokemon.getJsonNumber("weight").doubleValue()));
+                        pokemon.getInt("id"), pokemon.getString("name"), pokemon.getInt("type"), pokemon.getJsonNumber("weight").doubleValue()));
             }
         }
         return stage;
